@@ -33,3 +33,6 @@ MYSQL_HOST=db
 - You have to install the needs for testing your builds in self-hosted runner
 - Use github secrets for adding the credentials of Dockerhub repository
 - After a successful testing then push the docker images to a Dockerhub Repository
+
+## Logs for self-hosted github-runner
+![overall-logs](./images/logs.png)
