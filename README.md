@@ -15,3 +15,9 @@
 - **docker-compose** file contains the services configs and how to build an image from their `Dockerfile` 
 - Also used the `depends` option to wait unil another service start.
 - Used the wait script written in the backend service. (This is because the depends option doesn't work fine in all situation it is best to write a wait script for the services for dependency issues)
+
+## CI-CD
+- Setup the self-hosted runner for this
+- Then Configure Docker-Hub As Per your need
+- You have to install the needs for testing your builds in self-hosted runner
+- After a successful testing then push the docker images to a Dockerhub Repository
