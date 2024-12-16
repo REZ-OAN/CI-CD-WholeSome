@@ -1,0 +1,44 @@
+name: Build and Push Image to Docker Hub
+
+on:
+  workflow_run:
+    workflows: ["CI for my-app"]
+    types:
+      - completed
+jobs:
+  push_to_registry:
+    name: push docker image to hub
+    runs-on: self-hosted
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    permissions:
+      packages: write
+      contents: read
+      attestations: write
+      id-token: write
+    steps:
+      - name: check repository
+        uses: actions/checkout@v4
+
+      - name: login to docker registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
+
+      - name: build and push backend image to registry
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: cyborg117/ci-cd-wholesum-mac:backend
+      - name: build and push frontend image to registry
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: cyborg117/ci-cd-wholesum-mac:frontend
+
+
+      # Step 4: Logout from Docker Hub (optional but recommended)
+      - name: Log out from Docker Hub
+        run: docker logout

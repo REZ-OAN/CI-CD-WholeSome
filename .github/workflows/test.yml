@@ -1,0 +1,37 @@
+name: CI for my-app
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build  services
+        run: |
+          docker compose build --no-cache
+      - name: Start Services
+        run: |
+          docker-compose up -d
+
+      # Step 4: Test connectivity (frontend to backend)
+      - name: Test frontend-to-backend connectivity
+        run: |
+          docker-compose exec -T frontend ping -c 5 backend
+      - name: Test backend-to-frontend connectivity
+        run: |
+          docker-compose exec -T backend ping -c 5 frontend
+
+      # Step 5: Shut down services after tests
+      - name: Tear down services
+        if: always()
+        run: docker-compose down
