@@ -11,6 +11,17 @@
 ## Frontend
 - A simple `html` file and a `javascript` file that is used for interacting with the backend service.
 - A simple api-url condition for browser access and the internal docker access.
+## Database
+- used MySQL database
+- ``environment`` variables are given in `.env` file
+```bash
+MYSQL_ROOT_PASSWORD=rootpassword
+MYSQL_DATABASE=testdb
+MYSQL_USER=myuser
+MYSQL_PASSWORD=mypassword
+MYSQL_HOST=db
+
+```
 ## `docker-compose`
 - **docker-compose** file contains the services configs and how to build an image from their `Dockerfile` 
 - Also used the `depends` option to wait unil another service start.
@@ -20,4 +31,5 @@
 - Setup the self-hosted runner for this
 - Then Configure Docker-Hub As Per your need
 - You have to install the needs for testing your builds in self-hosted runner
+- Use github secrets for adding the credentials of Dockerhub repository
 - After a successful testing then push the docker images to a Dockerhub Repository
